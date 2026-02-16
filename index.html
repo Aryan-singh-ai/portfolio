@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aryan Singh | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #0b3d91;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.7em;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #0b3d91;
+            border-bottom: 2px solid #0b3d91;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+
+        .project {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+        }
+
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0b3d91;
+            color: white;
+        }
+
+        a {
+            color: #0b3d91;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Aryan Singh</h1>
+    <p>B.Tech CSE (AI & ML) | Python • Machine Learning • Data Structures | Actively Seeking Internship Opportunities</p>
+</header>
+
+<section>
+    <h2>About Me</h2>
+    <p>
+        I am a 3rd-year B.Tech Computer Science Engineering (AI & ML) student at GD Goenka University, Gurugram.
+        I have a strong foundation in Data Structures, Algorithms, and Machine Learning.
+        Passionate about building intelligent systems and solving real-world problems through technology.
+    </p>
+</section>
+
+<section>
+    <h2>Skills</h2>
+    <ul>
+        <li><strong>Programming:</strong> Python, C++, Java</li>
+        <li><strong>Machine Learning:</strong> Pandas, NumPy, Scikit-learn, TensorFlow</li>
+        <li><strong>Web Development:</strong> HTML, CSS, JavaScript</li>
+        <li><strong>Tools:</strong> Git, GitHub, VS Code, Jupyter Notebook</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Projects</h2>
+
+    <!-- Project 1 -->
+    <div class="project">
+        <h3>Student Performance Prediction</h3>
+        <p>Machine Learning model to predict exam scores based on study hours and attendance.</p>
+
+        <div class="code-block">
+<pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+
+data = pd.read_csv("student_data.csv")
+
+X = data[['study_hours', 'attendance']]
+y = data['exam_score']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+
+print("MAE:", mean_absolute_error(y_test, predictions))
+print("R2 Score:", r2_score(y_test, predictions))</code></pre>
+        </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project">
+        <h3>Weather Forecast Web App</h3>
+        <p>Web app that fetches real-time weather data using API integration.</p>
+
+        <div class="code-block">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;Weather App&lt;/h2&gt;
+&lt;input type="text" id="city" placeholder="Enter City"&gt;
+&lt;button onclick="getWeather()"&gt;Search&lt;/button&gt;
+&lt;p id="result"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+async function getWeather() {
+    const city = document.getElementById("city").value;
+    const apiKey = "YOUR_API_KEY";
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    document.getElementById("result").innerHTML =
+        `Temperature: ${data.main.temp} °C
+         Weather: ${data.weather[0].description}`;
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project">
+        <h3>Movie Recommendation System</h3>
+        <p>Recommendation engine using cosine similarity.</p>
+
+        <div class="code-block">
+<pre><code>import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+movies = pd.read_csv("movies.csv")
+
+vectorizer = CountVectorizer(stop_words="english")
+count_matrix = vectorizer.fit_transform(movies["genres"])
+
+similarity = cosine_similarity(count_matrix)
+
+def recommend(title):
+    index = movies[movies["title"] == title].index[0]
+    scores = list(enumerate(similarity[index]))
+    sorted_scores = sorted(scores, key=lambda x: x[1], reverse=True)
+
+    for i in sorted_scores[1:6]:
+        print(movies.iloc[i[0]].title)
+
+recommend("Avatar")</code></pre>
+        </div>
+    </div>
+
+</section>
+
+<section>
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:aryansingh17sep@gmail.com">aryansingh17sep@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/aryan-singh-9b1b7230a" target="_blank">linkedin.com/in/aryan-singh-9b1b7230a</a></p>
+    <p>GitHub: <a href="https://github.com/Aryan-singh-ai" target="_blank">github.com/Aryan-singh-ai</a></p>
+</section>
+
+<footer>
+    <p>© 2026 Aryan Singh | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
